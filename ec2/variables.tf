@@ -86,5 +86,5 @@ variable "assign_elastic_ip" {
 }
 
 variable "stage" {
-  type = bool
+  type = string
 }
