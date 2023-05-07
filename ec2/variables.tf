@@ -11,6 +11,10 @@ variable "vpc_id" {
   type = string
 }
 
+variable "vpc_cidr" {
+  type = string
+}
+
 variable "ec2_instance_type" {
   type    = string
   default = "t2.small"

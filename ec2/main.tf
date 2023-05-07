@@ -39,12 +39,6 @@ resource "aws_security_group" "ec2" {
 
   ingress {
     protocol    = "tcp"
-    from_port   = 0
-    to_port     = 65535
-    cidr_blocks = var.ec2_cidr_blocks
-  }
-  ingress {
-    protocol    = "tcp"
     from_port   = 22
     to_port     = 22
     cidr_blocks = var.is_bastion ? ["0.0.0.0/0"] : var.ec2_cidr_blocks
@@ -81,9 +75,12 @@ resource "aws_instance" "ec2" {
   vpc_security_group_ids = [aws_security_group.ec2.id]
   ebs_optimized          = var.ebs_optimized
   user_data              = var.userdata
-  tags = merge({
-    Name = "${var.ec2_instance_name}-${var.stage}"
-  }, var.tags)
+  tags = merge(
+    {
+      Name = "${var.ec2_instance_name}-${var.stage}"
+    },
+    var.tags
+  )
   root_block_device {
     volume_size           = var.ec2_volume_size
     delete_on_termination = true
